@@ -31,6 +31,11 @@
 	(map 'string (lambda (c) (case c (#\ÅM #\ÅL) (#\ÅL #\ÅM) (t c))) face)
       face)))
 
+(defun reset-timer (timer)
+  (when timer
+    (stop-timer timer)
+    (start-timer *wait* timer)))
+
 (defun user::shobon ()
   "(ÅL•É÷•ÅM)ºÆŒﬁ∞›"
   (interactive)
@@ -40,11 +45,9 @@
     (case (read-char-no-hang *keyboard*)
       (#\n
        (setq *wait* (max 0.01 (- *wait* 0.01)))
-       #0=(when *status-timer*
-	    #1=(user::shobon-toggle-status) #1#)
-       #2=(when *mode-line-timer*
-	    #3=(user::shobon-toggle-modeline) #3#))
-      (#\p (setq *wait* (min 0.15 (+ *wait* 0.01))) #0# #2#)
+       #0=(reset-timer *status-timer*)
+       #1=(reset-timer *mode-line-timer*))
+      (#\p (setq *wait* (min 0.15 (+ *wait* 0.01))) #0# #1#)
       (#\r (setq *direction* (- *direction*)))
       (#\j (setq h (mod (1+ h) 4)))
       (#\s (setq *shaki-n* (not *shaki-n*)))
@@ -71,16 +74,15 @@
 	(stop-timer *mode-line-timer*)
 	(setq *mode-line-timer* nil
 	      mode-line-format *mode-line-original*)
-	(update-mode-line)
 	(refresh-screen))
     (let ((i 0))
       (labels ((update ()
 		 (setq i (mod (+ i *direction*) 10))
 		 (setq mode-line-format
 		       (concat *mode-line-original* "    " (get-face i)))
-		 (update-mode-line)
 		 (refresh-screen)))
 	(setq *mode-line-original* mode-line-format
 	      *mode-line-timer* #'update)
 	(start-timer *wait* *mode-line-timer*)))))
 
+(provide "shobon")

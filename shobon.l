@@ -8,14 +8,17 @@
 (in-package :shobon)
 
 (defvar shobobon
-  '("( ã€€ ã€€Â´)""(ã€€ã€€ Â´ï½¥)""(ã€€ Â´ï½¥Ï‰)""(ã€€Â´ï½¥Ï‰ï½¥)" 
-    "(Â´ï½¥Ï‰ï½¥ï½€)""(ï½¥Ï‰ï½¥ï½€ã€€)""(Ï‰ï½¥ï½€ ã€€)""(ï½¥ï½€ ã€€ã€€)" 
-    "(ï½€ ã€€ ã€€)""( ã€€ã€€ã€€ )"))
+  '("(      L)""(     L¥)""(   L¥ƒÖ)""(  L¥ƒÖ¥)" 
+    "(L¥ƒÖ¥M)""(¥ƒÖ¥M  )""(ƒÖ¥M   )""(¥M     )" 
+    "(M      )""(        )"))
+
+(defun shaki-n (aa)
+  (map 'string (lambda (c) (case c (#\M #\L) (#\L #\M) (t c))) aa))
 
 (defun user::shobon ()
   "(L¥ƒÖ¥M)¼®ÎŞ°İ"
   (interactive)
-  (do ((wait 0.1) (d 1) (h 0)
+  (do ((wait 0.1) (d 1) (h 0) (s nil)
        (i 0 (mod (+ i d) 10))
        (j 0 (- 25 (expt (- 4 i) 2))))
       ()
@@ -24,6 +27,9 @@
       (#\p (setq wait (min 0.15 (+ wait 0.01))))
       (#\r (setq d (- d)))
       (#\j (setq h (mod (1+ h) 4)))
+      (#\s (setq s (not s)))
       (#\q (return))
       (t (sit-for wait)
-	 (minibuffer-prompt "~VT~A" (* h j) (nth i shobobon))))))
+	 (minibuffer-prompt "~VT~A" (* h j)
+			    (if s (shaki-n #0=(nth i shobobon))
+			      #0#))))))

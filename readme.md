@@ -1,6 +1,6 @@
 # shobon.l
 
-2ch software板のxyzzyスレその12の809に色々付け足した物です(｀･ω･´)
+2ch software板のxyzzyスレその12の809に色々付け足した物です(´･ω･｀)
 
 ## original
 

@@ -1,12 +1,19 @@
-;;; fork from http://pc12.2ch.net/test/read.cgi/software/1226425897/809
+;;; -*- mode:lisp; package:shobon -*-
+
+;;; forked from http://pc12.2ch.net/test/read.cgi/software/1226425897/809
+
+(defpackage :shobon
+  (:use :lisp :editor))
+
+(in-package :shobon)
 
 (defvar shobobon
   '("( 　 　´)""(　　 ´･)""(　 ´･ω)""(　´･ω･)" 
     "(´･ω･｀)""(･ω･｀　)""(ω･｀ 　)""(･｀ 　　)" 
     "(｀ 　 　)""( 　　　 )"))
 
-(defun shobon ()
-  "(´･ω･｀)ｼｮﾎﾞｰﾝ"
+(defun user::shobon ()
+  "(�L��֥�M)���ް�"
   (interactive)
   (do ((wait 0.1) (d 1) (h 0)
        (i 0 (mod (+ i d) 10))
